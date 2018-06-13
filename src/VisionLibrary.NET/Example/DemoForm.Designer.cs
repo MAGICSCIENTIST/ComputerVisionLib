@@ -33,6 +33,7 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btn_mutity = new System.Windows.Forms.Button();
             this.imageListView1 = new ImageListViewDemo.ImageListView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,9 @@
             this.thumbnailsToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btn_one = new System.Windows.Forms.Button();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -54,6 +58,10 @@
             this.statusStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -65,14 +73,14 @@
             // 
             // toolStripContainer1.ContentPanel
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.imageListView1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(474, 210);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(824, 494);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(474, 282);
+            this.toolStripContainer1.Size = new System.Drawing.Size(824, 541);
             this.toolStripContainer1.TabIndex = 0;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -85,16 +93,27 @@
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 25);
+            this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(474, 22);
+            this.statusStrip.Size = new System.Drawing.Size(824, 22);
             this.statusStrip.TabIndex = 0;
             // 
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Ready";
+            // 
+            // btn_mutity
+            // 
+            this.btn_mutity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_mutity.Location = new System.Drawing.Point(477, 468);
+            this.btn_mutity.Name = "btn_mutity";
+            this.btn_mutity.Size = new System.Drawing.Size(75, 23);
+            this.btn_mutity.TabIndex = 1;
+            this.btn_mutity.Text = "mutity";
+            this.btn_mutity.UseVisualStyleBackColor = true;
+            this.btn_mutity.Click += new System.EventHandler(this.btn_mutity_Click);
             // 
             // imageListView1
             // 
@@ -107,7 +126,7 @@
             this.imageListView1.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.imageListView1.Location = new System.Drawing.Point(0, 0);
             this.imageListView1.Name = "imageListView1";
-            this.imageListView1.Size = new System.Drawing.Size(474, 210);
+            this.imageListView1.Size = new System.Drawing.Size(555, 494);
             this.imageListView1.TabIndex = 0;
             this.imageListView1.ItemDoubleClick += new ImageListViewDemo.ItemDoubleClickEventHandler(this.imageListView1_ItemDoubleClick);
             this.imageListView1.SelectionChanged += new System.EventHandler(this.imageListView1_SelectionChanged);
@@ -118,12 +137,12 @@
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(114, 26);
+            this.contextMenuStrip.Size = new System.Drawing.Size(108, 26);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -141,7 +160,7 @@
             this.thumbnailsToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(3, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(304, 25);
+            this.toolStrip.Size = new System.Drawing.Size(296, 25);
             this.toolStrip.TabIndex = 0;
             // 
             // addToolStripButton
@@ -172,7 +191,7 @@
             // rendererToolStripLabel
             // 
             this.rendererToolStripLabel.Name = "rendererToolStripLabel";
-            this.rendererToolStripLabel.Size = new System.Drawing.Size(65, 22);
+            this.rendererToolStripLabel.Size = new System.Drawing.Size(57, 22);
             this.rendererToolStripLabel.Text = "Renderer:";
             // 
             // renderertoolStripComboBox
@@ -221,11 +240,50 @@
             this.timerStatus.Interval = 2000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.btn_one);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_mutity);
+            this.splitContainer1.Panel1.Controls.Add(this.imageListView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(824, 494);
+            this.splitContainer1.SplitterDistance = 555;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(265, 494);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
+            // 
+            // btn_one
+            // 
+            this.btn_one.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_one.Location = new System.Drawing.Point(396, 468);
+            this.btn_one.Name = "btn_one";
+            this.btn_one.Size = new System.Drawing.Size(75, 23);
+            this.btn_one.TabIndex = 1;
+            this.btn_one.Text = "one";
+            this.btn_one.UseVisualStyleBackColor = true;
+            this.btn_one.Click += new System.EventHandler(this.button1_Click);
+            // 
             // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(474, 282);
+            this.ClientSize = new System.Drawing.Size(824, 541);
             this.Controls.Add(this.toolStripContainer1);
             this.Name = "DemoForm";
             this.Text = "ImageListView Demo";
@@ -241,6 +299,10 @@
             this.contextMenuStrip.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -264,7 +326,10 @@
         private System.Windows.Forms.Timer timerStatus;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-
+        private System.Windows.Forms.Button btn_mutity;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button btn_one;
     }
 }
 

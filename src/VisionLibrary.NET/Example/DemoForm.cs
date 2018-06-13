@@ -8,6 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.ProjectOxford.Vision.Contract;
+using Newtonsoft.Json;
+using VisionLibrary.Common;
+using VisionLibrary.Conclusion;
+using VisionLibrary.Enum;
+using VisionLibrary.VisionClass;
 
 namespace ImageListViewDemo
 {
@@ -114,5 +123,135 @@ namespace ImageListViewDemo
         {
             var a = imageListView1.SelectedItems;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            if (this.imageListView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("please select a image");
+                return;
+            }
+            string path = this.imageListView1.SelectedItems[0].FileName;
+            AnalyzeImage(path);
+        }
+
+        private void btn_mutity_Click(object sender, EventArgs e)
+        {
+
+            if (this.imageListView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("please select a image");
+                return;
+            }
+            List<string> path = this.imageListView1.SelectedItems.Select(x => x.FileName).ToList();
+            AnalyzeImage(path);
+        }
+
+        private async void AnalyzeImage(string path)
+        {
+            //time watcher
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+
+            AzureVisionAnalyze analyze = VisionClassFactory.CreateVisionClass(VisionAPIType.AzureVisionAnalyze) as AzureVisionAnalyze;
+            analyze.Key = "43ff244f1b5047d49d82aac0b482d939";
+
+
+
+            Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags, AzureTagFeature.Description, AzureTagFeature.Categories);
+            AnalysisResult res = await resTask;
+
+            //watch end
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            //write result
+            this.richTextBox1.Text = $"run with {path}\n";
+            this.richTextBox1.Text += $"used {elapsedMs} ms\n";
+            this.richTextBox1.Text += VisCommonClass.JsonPrettyPrint(JsonConvert.SerializeObject(res));
+            MessageBox.Show($"cost {elapsedMs}ms");
+        }
+
+        private async void AnalyzeImage(List<string> pathList)
+        {
+            //time watcher
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+
+            AzureVisionAnalyze analyze = VisionClassFactory.CreateVisionClass(VisionAPIType.AzureVisionAnalyze) as AzureVisionAnalyze;
+            analyze.Key = "<your Key>";
+            //analyze.API = "<API URL option>";
+            
+
+            string dir = Path.Combine(Application.StartupPath, "result");
+            if (!System.IO.Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            string dirAnimal = Path.Combine(dir, "aniaml");
+            if (!System.IO.Directory.Exists(dirAnimal))
+            {
+                Directory.CreateDirectory(dirAnimal);
+            }
+            string dirNoAnimal = Path.Combine(dir, "NoAniaml");
+            if (!System.IO.Directory.Exists(dirNoAnimal))
+            {
+                Directory.CreateDirectory(dirNoAnimal);
+            }
+
+            int animalCount = 0;
+            int noAnimalCount = 0;
+            int errCount = 0;
+
+            List<Task> taskList = new List<Task>();
+            foreach (string path in pathList)
+            {
+                try
+                {
+
+                    Task task = Task.Factory.StartNew(() =>
+                    {
+                        Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags, AzureTagFeature.Description, AzureTagFeature.Categories);
+
+                        AnalysisResult res = resTask.GetAwaiter().GetResult();
+                        string fileName = Path.GetFileName(path);
+                        if (res.IsAnimal())
+                        {
+                            File.Copy(path, Path.Combine(dirAnimal, fileName));
+                            animalCount++;
+                        }
+                        else
+                        {
+                            File.Copy(path, Path.Combine(dirNoAnimal, fileName));
+                            noAnimalCount++;
+                        }
+                    });     
+                    taskList.Add(task);
+
+
+                }
+                catch (Exception e)
+                {
+                    errCount++;
+
+                }
+            }
+
+            Task.WaitAll(taskList.ToArray());
+
+            //watch end
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            //write result
+            this.richTextBox1.Text = $"animal: {animalCount}\n";
+            this.richTextBox1.Text += $"no Animal: {noAnimalCount}\n";
+            this.richTextBox1.Text += $"error: {errCount}\n";
+            this.richTextBox1.Text += $"cost: {elapsedMs} ms\n";
+            MessageBox.Show($"done {elapsedMs}ms");
+        }
+
+        
     }
 }
