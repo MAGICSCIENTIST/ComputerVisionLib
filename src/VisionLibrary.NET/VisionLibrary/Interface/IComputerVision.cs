@@ -13,8 +13,8 @@ namespace VisionLibrary.Interface
         /// <summary>
         /// key
         /// </summary>
-        string Key { get; set; }
-        
-        Task<AnalysisResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] features);
+        string Key { get; set; }        
+
+        //Task<AnalysisResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] features);
     }
 }

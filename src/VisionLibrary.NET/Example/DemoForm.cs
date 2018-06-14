@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using VisionLibrary.Common;
 using VisionLibrary.Conclusion;
 using VisionLibrary.Enum;
+using VisionLibrary.Module;
 using VisionLibrary.VisionClass;
 
 namespace ImageListViewDemo
@@ -159,7 +160,7 @@ namespace ImageListViewDemo
 
 
 
-            Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags, AzureTagFeature.Description, AzureTagFeature.Categories);
+            Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags, AzureTagFeature.Description, AzureTagFeature.Categories, AzureTagFeature.Color);
             AnalysisResult res = await resTask;
 
             //watch end
@@ -167,7 +168,8 @@ namespace ImageListViewDemo
             var elapsedMs = watch.ElapsedMilliseconds;
 
             //write result
-            this.richTextBox1.Text = $"run with {path}\n";
+            this.richTextBox1.Text = $"is animal:{res.IsAnimal()}\n";
+            this.richTextBox1.Text += $"run with {path}\n";
             this.richTextBox1.Text += $"used {elapsedMs} ms\n";
             this.richTextBox1.Text += VisCommonClass.JsonPrettyPrint(JsonConvert.SerializeObject(res));
             MessageBox.Show($"cost {elapsedMs}ms");
@@ -178,13 +180,10 @@ namespace ImageListViewDemo
             //time watcher
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-
             AzureVisionAnalyze analyze = VisionClassFactory.CreateVisionClass(VisionAPIType.AzureVisionAnalyze) as AzureVisionAnalyze;
-            analyze.Key = "<your Key>";
-            //analyze.API = "<API URL option>";
-            
+            analyze.Key = "43ff244f1b5047d49d82aac0b482d939";
 
-            string dir = Path.Combine(Application.StartupPath, "result");
+            string dir = Path.Combine(Application.StartupPath, "result", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
             if (!System.IO.Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -203,42 +202,53 @@ namespace ImageListViewDemo
             int animalCount = 0;
             int noAnimalCount = 0;
             int errCount = 0;
+            int maxThread = 5;
 
-            List<Task> taskList = new List<Task>();
-            foreach (string path in pathList)
+            using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(maxThread))
             {
-                try
+                List<Task> taskList = new List<Task>();
+                foreach (string path in pathList)
                 {
 
+                    concurrencySemaphore.Wait();
                     Task task = Task.Factory.StartNew(() =>
                     {
-                        Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags, AzureTagFeature.Description, AzureTagFeature.Categories);
+                        try
+                        {
+                            Task<AnalysisResult> resTask = analyze.UploadAndAnalyzeImage(path, AzureTagFeature.Tags,
+                                AzureTagFeature.Description, AzureTagFeature.Categories);
 
-                        AnalysisResult res = resTask.GetAwaiter().GetResult();
-                        string fileName = Path.GetFileName(path);
-                        if (res.IsAnimal())
-                        {
-                            File.Copy(path, Path.Combine(dirAnimal, fileName));
-                            animalCount++;
+                            AnalysisResult res = resTask.GetAwaiter().GetResult();
+                            string fileName = Path.GetFileName(path);
+                            if (res.IsAnimal())
+                            {
+                                File.Copy(path, Path.Combine(dirAnimal, fileName));
+                                animalCount++;
+                            }
+                            else
+                            {
+                                File.Copy(path, Path.Combine(dirNoAnimal, fileName));
+                                noAnimalCount++;
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            File.Copy(path, Path.Combine(dirNoAnimal, fileName));
-                            noAnimalCount++;
+                            errCount++;
                         }
-                    });     
+                        finally
+                        {
+                            concurrencySemaphore.Release();
+                        }
+                    });
                     taskList.Add(task);
 
-
                 }
-                catch (Exception e)
-                {
-                    errCount++;
-
-                }
+                Task.WaitAll(taskList.ToArray());
             }
 
-            Task.WaitAll(taskList.ToArray());
+
+
+
 
             //watch end
             watch.Stop();
@@ -250,8 +260,20 @@ namespace ImageListViewDemo
             this.richTextBox1.Text += $"error: {errCount}\n";
             this.richTextBox1.Text += $"cost: {elapsedMs} ms\n";
             MessageBox.Show($"done {elapsedMs}ms");
+            System.Diagnostics.Process.Start(dir);
         }
 
-        
+        private void btn_baiduAnimal_Click(object sender, EventArgs e)
+        {
+            if (this.imageListView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("please select a image");
+                return;
+            }
+            BaiduVisionAnalyze ana = new BaiduVisionAnalyze();
+            ana.Key = "vKHUR4T6BMeO3yTVwW3nR1NN";
+            ana.SKey = "u8A17o87RD7Q35lU8qQKjxrDs1bguBrD";
+            BaiduAnalyzeResult res = ana.UploadAndAnalyzeImage(imageListView1.SelectedItems[0].FileName).Result;
+        }
     }
 }

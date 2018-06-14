@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,6 +23,14 @@ namespace VisionLibrary.VisionClass
         //private const string uriBase = "https://api.cognitive.azure.cn/vision/v1.0/tag"; //cn
         private string uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
+
+        public async Task<AnalysisResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] azureTagFeature)
+        {
+            byte[] byteData = VisCommonClass.GetImageAsByteArray(image);
+
+            return  UploadAndAnalyzeImage(byteData, azureTagFeature).GetAwaiter().GetResult();
+        }
+
         /// <summary>
         /// Gets the analysis of the specified image file by using
         /// the Computer Vision REST API.
@@ -31,8 +40,20 @@ namespace VisionLibrary.VisionClass
         public async Task<AnalysisResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] azureTagFeature)
         {
 
-            HttpClient client = new HttpClient();
 
+            
+            byte[] byteData = VisCommonClass.GetImageAsByteArray(imageFilePath);
+
+            return UploadAndAnalyzeImage(byteData, azureTagFeature).GetAwaiter().GetResult();
+
+          
+        }
+
+        public async Task<AnalysisResult> UploadAndAnalyzeImage(byte[] byteData, params System.Enum[] azureTagFeature)
+        {
+
+            HttpClient client = new HttpClient();
+            client.Timeout = TimeSpan.FromMinutes(3);
             // Request headers.
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
 
@@ -55,8 +76,6 @@ namespace VisionLibrary.VisionClass
             HttpResponseMessage response;
 
             // Request body. Posts a locally stored JPEG image.
-            byte[] byteData = VisCommonClass.GetImageAsByteArray(imageFilePath);
-
             using (ByteArrayContent content = new ByteArrayContent(byteData))
             {
                 // This example uses content type "application/octet-stream".
@@ -83,7 +102,7 @@ namespace VisionLibrary.VisionClass
             return JsonConvert.DeserializeObject<AnalysisResult>(contentString);
         }
 
-        
+
 
     }
 }

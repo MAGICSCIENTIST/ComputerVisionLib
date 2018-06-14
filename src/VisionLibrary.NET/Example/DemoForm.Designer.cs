@@ -33,10 +33,13 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btn_one = new System.Windows.Forms.Button();
             this.btn_mutity = new System.Windows.Forms.Button();
             this.imageListView1 = new ImageListViewDemo.ImageListView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.addToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -48,20 +51,18 @@
             this.thumbnailsToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.btn_one = new System.Windows.Forms.Button();
+            this.btn_baiduAnimal = new System.Windows.Forms.Button();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.contextMenuStrip.SuspendLayout();
-            this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -104,6 +105,37 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Ready";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.btn_baiduAnimal);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_one);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_mutity);
+            this.splitContainer1.Panel1.Controls.Add(this.imageListView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
+            this.splitContainer1.Size = new System.Drawing.Size(824, 494);
+            this.splitContainer1.SplitterDistance = 555;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // btn_one
+            // 
+            this.btn_one.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_one.Location = new System.Drawing.Point(396, 468);
+            this.btn_one.Name = "btn_one";
+            this.btn_one.Size = new System.Drawing.Size(75, 23);
+            this.btn_one.TabIndex = 1;
+            this.btn_one.Text = "one";
+            this.btn_one.UseVisualStyleBackColor = true;
+            this.btn_one.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btn_mutity
             // 
             this.btn_mutity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -145,6 +177,15 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(265, 494);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
             // 
             // toolStrip
             // 
@@ -240,44 +281,15 @@
             this.timerStatus.Interval = 2000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
-            // splitContainer1
+            // btn_baiduAnimal
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.btn_one);
-            this.splitContainer1.Panel1.Controls.Add(this.btn_mutity);
-            this.splitContainer1.Panel1.Controls.Add(this.imageListView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(824, 494);
-            this.splitContainer1.SplitterDistance = 555;
-            this.splitContainer1.TabIndex = 2;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(265, 494);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
-            // 
-            // btn_one
-            // 
-            this.btn_one.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_one.Location = new System.Drawing.Point(396, 468);
-            this.btn_one.Name = "btn_one";
-            this.btn_one.Size = new System.Drawing.Size(75, 23);
-            this.btn_one.TabIndex = 1;
-            this.btn_one.Text = "one";
-            this.btn_one.UseVisualStyleBackColor = true;
-            this.btn_one.Click += new System.EventHandler(this.button1_Click);
+            this.btn_baiduAnimal.Location = new System.Drawing.Point(315, 468);
+            this.btn_baiduAnimal.Name = "btn_baiduAnimal";
+            this.btn_baiduAnimal.Size = new System.Drawing.Size(75, 23);
+            this.btn_baiduAnimal.TabIndex = 2;
+            this.btn_baiduAnimal.Text = "ani";
+            this.btn_baiduAnimal.UseVisualStyleBackColor = true;
+            this.btn_baiduAnimal.Click += new System.EventHandler(this.btn_baiduAnimal_Click);
             // 
             // DemoForm
             // 
@@ -296,13 +308,13 @@
             this.toolStripContainer1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.contextMenuStrip.ResumeLayout(false);
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.contextMenuStrip.ResumeLayout(false);
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -330,6 +342,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btn_one;
+        private System.Windows.Forms.Button btn_baiduAnimal;
     }
 }
 

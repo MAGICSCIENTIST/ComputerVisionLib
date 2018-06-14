@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AForge.Imaging.Filters;
 using Image = AForge.Imaging.Image;
+using AForge.Video.FFMPEG;
 
 namespace VisionLibrary.Common
 {
@@ -26,7 +27,7 @@ namespace VisionLibrary.Common
                 //return binaryReader.ReadBytes((int)fileStream.Length);
 
                 //resize
-                Bitmap newImage = miniSizeImage(fileStream,1200,1200);
+                Bitmap newImage = miniSizeImage(fileStream, 600, 600);
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     newImage.Save(memoryStream, ImageFormat.Bmp);
@@ -34,6 +35,12 @@ namespace VisionLibrary.Common
                     return memoryStream.ToArray();
                 }
             }
+        }
+
+        internal static byte[] GetImageAsByteArray(Bitmap image)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
 
         /// <summary>
@@ -115,8 +122,9 @@ namespace VisionLibrary.Common
         /// <param name="width">压缩目标宽,会按原比例缩放</param>
         /// <param name="height">压缩目标高,会按原比例缩放</param>
         /// <returns></returns>
-        public static Bitmap miniSizeImage(FileStream stream,int width,int height)
+        public static Bitmap miniSizeImage(FileStream stream, int width, int height)
         {
+
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
             int _height = 0;
             int _width = 0;
@@ -128,12 +136,23 @@ namespace VisionLibrary.Common
             }
             else
             {
-                _height =  (int)((double)image.Size.Height/ image.Size.Width  * width);
+                _height = (int)((double)image.Size.Height / image.Size.Width * width);
                 _width = width;
             };
             ResizeBicubic filter = new ResizeBicubic(_width, _height);
             // apply the filter
             return filter.Apply(image as Bitmap);
+
+        }
+
+        //TODO readType 
+        public static Bitmap GetVideoFrame(string filepath)
+        {
+            VideoFileReader reader = new VideoFileReader();
+            reader.Open(filepath);            
+            Bitmap videoFrame = reader.ReadVideoFrame();
+            reader.Close();
+            return videoFrame;
         }
     }
 }
