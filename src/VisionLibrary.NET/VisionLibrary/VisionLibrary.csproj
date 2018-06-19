@@ -70,12 +70,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaiduAccessToken.cs" />
+    <Compile Include="Attributes\ExNameAttribute.cs" />
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\LogWriter.cs" />
     <Compile Include="Common\Translator.cs" />
     <Compile Include="Common\VisCommonClass.cs" />
     <Compile Include="Common\VisionClassFactory.cs" />
+    <Compile Include="Conclusion\BaiduAnalyzeResultConclusion.cs" />
     <Compile Include="Conclusion\AzureAnalyzeResultConclusion.cs" />
     <Compile Include="Enum\AzureTagFeature.cs" />
+    <Compile Include="Enum\FileType.cs" />
     <Compile Include="Interface\IComputerVision.cs" />
     <Compile Include="Enum\VisionAPIType.cs" />
     <Compile Include="Module\Score.cs" />

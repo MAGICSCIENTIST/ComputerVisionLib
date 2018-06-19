@@ -34,6 +34,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btn_baiduAnimal = new System.Windows.Forms.Button();
             this.btn_one = new System.Windows.Forms.Button();
             this.btn_mutity = new System.Windows.Forms.Button();
             this.imageListView1 = new ImageListViewDemo.ImageListView();
@@ -51,7 +52,7 @@
             this.thumbnailsToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
-            this.btn_baiduAnimal = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -115,6 +116,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.btn_baiduAnimal);
             this.splitContainer1.Panel1.Controls.Add(this.btn_one);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.btn_mutity);
             this.splitContainer1.Panel1.Controls.Add(this.imageListView1);
             // 
@@ -125,6 +127,17 @@
             this.splitContainer1.SplitterDistance = 555;
             this.splitContainer1.TabIndex = 2;
             // 
+            // btn_baiduAnimal
+            // 
+            this.btn_baiduAnimal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_baiduAnimal.Location = new System.Drawing.Point(291, 468);
+            this.btn_baiduAnimal.Name = "btn_baiduAnimal";
+            this.btn_baiduAnimal.Size = new System.Drawing.Size(99, 23);
+            this.btn_baiduAnimal.TabIndex = 2;
+            this.btn_baiduAnimal.Text = "是哪个(BAIDU)";
+            this.btn_baiduAnimal.UseVisualStyleBackColor = true;
+            this.btn_baiduAnimal.Click += new System.EventHandler(this.btn_baiduAnimal_Click);
+            // 
             // btn_one
             // 
             this.btn_one.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -132,7 +145,7 @@
             this.btn_one.Name = "btn_one";
             this.btn_one.Size = new System.Drawing.Size(75, 23);
             this.btn_one.TabIndex = 1;
-            this.btn_one.Text = "one";
+            this.btn_one.Text = "单个";
             this.btn_one.UseVisualStyleBackColor = true;
             this.btn_one.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -143,7 +156,7 @@
             this.btn_mutity.Name = "btn_mutity";
             this.btn_mutity.Size = new System.Drawing.Size(75, 23);
             this.btn_mutity.TabIndex = 1;
-            this.btn_mutity.Text = "mutity";
+            this.btn_mutity.Text = "复数";
             this.btn_mutity.UseVisualStyleBackColor = true;
             this.btn_mutity.Click += new System.EventHandler(this.btn_mutity_Click);
             // 
@@ -281,15 +294,16 @@
             this.timerStatus.Interval = 2000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
-            // btn_baiduAnimal
+            // button1
             // 
-            this.btn_baiduAnimal.Location = new System.Drawing.Point(315, 468);
-            this.btn_baiduAnimal.Name = "btn_baiduAnimal";
-            this.btn_baiduAnimal.Size = new System.Drawing.Size(75, 23);
-            this.btn_baiduAnimal.TabIndex = 2;
-            this.btn_baiduAnimal.Text = "ani";
-            this.btn_baiduAnimal.UseVisualStyleBackColor = true;
-            this.btn_baiduAnimal.Click += new System.EventHandler(this.btn_baiduAnimal_Click);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(477, 439);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "复数-进度条";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btn_mutity_progress_Click);
             // 
             // DemoForm
             // 
@@ -343,6 +357,7 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btn_one;
         private System.Windows.Forms.Button btn_baiduAnimal;
+        private System.Windows.Forms.Button button1;
     }
 }
 

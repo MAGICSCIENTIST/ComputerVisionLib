@@ -19,27 +19,36 @@ namespace VisionLibrary.Common
         /// </summary>
         /// <param name="imageFilePath">The image file to read.</param>
         /// <returns>The byte array of the image data.</returns>
-        public static byte[] GetImageAsByteArray(string imageFilePath)
+        public static byte[] GetImageAsByteArray(string imageFilePath, bool min = true, int minSizeWidth = 600, int minSizeHeight = 600)
         {
             using (FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read))
-            {
-                //BinaryReader binaryReader = new BinaryReader(fileStream);
-                //return binaryReader.ReadBytes((int)fileStream.Length);
-
+            {                
                 //resize
-                Bitmap newImage = miniSizeImage(fileStream, 600, 600);
-                using (MemoryStream memoryStream = new MemoryStream())
+                if (min)
                 {
-                    newImage.Save(memoryStream, ImageFormat.Bmp);
-                    //read
-                    return memoryStream.ToArray();
+                    Bitmap newImage = miniSizeImage(fileStream, 600, 600);
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        newImage.Save(memoryStream, ImageFormat.Bmp);
+                        //read
+                        return memoryStream.ToArray();
+                    }
+                }
+                else
+                {
+                    BinaryReader binaryReader = new BinaryReader(fileStream);
+                    return binaryReader.ReadBytes((int)fileStream.Length);
                 }
             }
         }
 
-        internal static byte[] GetImageAsByteArray(Bitmap image)
+        internal static byte[] GetImageAsByteArray(Bitmap image, bool min = true, int minSizeWidth = 600, int minSizeHeight = 600)
         {
             ImageConverter converter = new ImageConverter();
+            if (min)
+            {
+                image = VisCommonClass.miniSizeImage(image, minSizeWidth, minSizeHeight);
+            }
             return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
 
@@ -126,6 +135,18 @@ namespace VisionLibrary.Common
         {
 
             System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
+            return miniSizeImage(image, width, height);
+        }
+        /// <summary>
+        /// 将图片大小标准化(4M限制)
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="width">压缩目标宽,会按原比例缩放</param>
+        /// <param name="height">压缩目标高,会按原比例缩放</param>
+        /// <returns></returns>
+        public static Bitmap miniSizeImage(System.Drawing.Image image, int width, int height)
+        {
+
             int _height = 0;
             int _width = 0;
             //height much bigger , so height is the max number of size
@@ -149,7 +170,7 @@ namespace VisionLibrary.Common
         public static Bitmap GetVideoFrame(string filepath)
         {
             VideoFileReader reader = new VideoFileReader();
-            reader.Open(filepath);            
+            reader.Open(filepath);
             Bitmap videoFrame = reader.ReadVideoFrame();
             reader.Close();
             return videoFrame;

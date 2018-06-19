@@ -23,7 +23,15 @@ namespace VisionLibrary.VisionClass
         //private const string uriBase = "https://api.cognitive.azure.cn/vision/v1.0/tag"; //cn
         private string uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
-
+        /// <summary>
+        ///  Gets the analysis of the specified image file by usin
+        /// the Computer Vision REST API.
+        /// 识别,默认图片会有压缩600px
+        /// 不想压缩或者想手动压缩的走byte那个方法
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="azureTagFeature"></param>
+        /// <returns></returns>
         public async Task<AnalysisResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] azureTagFeature)
         {
             byte[] byteData = VisCommonClass.GetImageAsByteArray(image);
@@ -34,6 +42,8 @@ namespace VisionLibrary.VisionClass
         /// <summary>
         /// Gets the analysis of the specified image file by using
         /// the Computer Vision REST API.
+        /// 识别,默认图片会有压缩600px
+        /// 不想压缩或者想手动压缩的走byte那个方法
         /// </summary>
         /// <param name="imageFilePath">The image file to analyze.</param>
         /// <param name="azureTagFeature">type is a enum  'AzureTagFeature' .</param>
@@ -44,16 +54,21 @@ namespace VisionLibrary.VisionClass
             
             byte[] byteData = VisCommonClass.GetImageAsByteArray(imageFilePath);
 
-            return UploadAndAnalyzeImage(byteData, azureTagFeature).GetAwaiter().GetResult();
+            return await UploadAndAnalyzeImage(byteData, azureTagFeature);
 
           
-        }
-
+        }        
+        /// <summary>
+        /// 识别
+        /// </summary>
+        /// <param name="byteData"></param>
+        /// <param name="azureTagFeature"></param>
+        /// <returns></returns>
         public async Task<AnalysisResult> UploadAndAnalyzeImage(byte[] byteData, params System.Enum[] azureTagFeature)
         {
 
             HttpClient client = new HttpClient();
-            client.Timeout = TimeSpan.FromMinutes(3);
+            //client.Timeout = TimeSpan.FromMinutes(30);
             // Request headers.
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
 
@@ -81,8 +96,7 @@ namespace VisionLibrary.VisionClass
                 // This example uses content type "application/octet-stream".
                 // The other content types you can use are "application/json"
                 // and "multipart/form-data".
-                content.Headers.ContentType =
-                    new MediaTypeHeaderValue("application/octet-stream");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 // Make the REST API call.
                 response = await client.PostAsync(uri, content);

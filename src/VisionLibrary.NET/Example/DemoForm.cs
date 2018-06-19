@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using engineDemo.forms;
 using Microsoft.ProjectOxford.Vision.Contract;
 using Newtonsoft.Json;
 using VisionLibrary.Common;
@@ -30,6 +31,7 @@ namespace ImageListViewDemo
             renderertoolStripComboBox.SelectedIndex = 0;
         }
 
+        #region 基础控件事件, 与识别无关
         void Application_Idle(object sender, EventArgs e)
         {
             // Refresh UI cues
@@ -123,7 +125,8 @@ namespace ImageListViewDemo
         private void imageListView1_ItemDoubleClick(object sender, ItemClickEventArgs e)
         {
             var a = imageListView1.SelectedItems;
-        }
+        } 
+        #endregion
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -148,6 +151,31 @@ namespace ImageListViewDemo
             List<string> path = this.imageListView1.SelectedItems.Select(x => x.FileName).ToList();
             AnalyzeImage(path);
         }
+        private void btn_mutity_progress_Click(object sender, EventArgs e)
+        {
+
+            if (this.imageListView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("please select a image");
+                return;
+            }
+            List<string> path = this.imageListView1.SelectedItems.Select(x => x.FileName).ToList();
+            Form_imageVision f = new Form_imageVision(path);
+            f.Show();
+        }     
+
+        private void btn_baiduAnimal_Click(object sender, EventArgs e)
+        {
+            if (this.imageListView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("please select a image");
+                return;
+            }            
+            BaiduAnalyzeImage(this.imageListView1.SelectedItems[0].FileName);
+        }
+
+
+        #region 识别功能
 
         private async void AnalyzeImage(string path)
         {
@@ -263,17 +291,29 @@ namespace ImageListViewDemo
             System.Diagnostics.Process.Start(dir);
         }
 
-        private void btn_baiduAnimal_Click(object sender, EventArgs e)
+        private async void BaiduAnalyzeImage(string path)
         {
-            if (this.imageListView1.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("please select a image");
-                return;
-            }
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             BaiduVisionAnalyze ana = new BaiduVisionAnalyze();
             ana.Key = "vKHUR4T6BMeO3yTVwW3nR1NN";
             ana.SKey = "u8A17o87RD7Q35lU8qQKjxrDs1bguBrD";
-            BaiduAnalyzeResult res = ana.UploadAndAnalyzeImage(imageListView1.SelectedItems[0].FileName).Result;
+
+
+            Task<BaiduAnalyzeResult> resTask = ana.UploadAndAnalyzeImage(path);
+            BaiduAnalyzeResult res = await resTask;
+
+            //watch end
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            //write result
+            this.richTextBox1.Text = $"is animal:{res.IsAnimal()}\n";
+            this.richTextBox1.Text += $"run with {imageListView1.SelectedItems[0].FileName}\n";
+            this.richTextBox1.Text += $"used {elapsedMs} ms\n";
+            this.richTextBox1.Text += VisCommonClass.JsonPrettyPrint(JsonConvert.SerializeObject(res));
+            MessageBox.Show($"cost {elapsedMs}ms");
         }
+
+        #endregion
     }
 }
