@@ -15,7 +15,7 @@ namespace VisionLibrary.Conclusion
             var res=false;
             if (data.result!=null)
             {
-                res = data.result.Any(x => x.score >= minConfidence);
+                res = data.result.Any(x => x.score >= minConfidence&&x.name!= "非动物");
             }            
             return res;
         }

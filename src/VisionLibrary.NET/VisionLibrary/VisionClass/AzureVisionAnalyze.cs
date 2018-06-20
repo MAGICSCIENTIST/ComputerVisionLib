@@ -77,7 +77,7 @@ namespace VisionLibrary.VisionClass
 
             if (azureTagFeature.Length == 0)
             {
-                requestParameters += "Categories,Description,Color,Tags";
+                requestParameters += "Tags";
             }
             else
             {

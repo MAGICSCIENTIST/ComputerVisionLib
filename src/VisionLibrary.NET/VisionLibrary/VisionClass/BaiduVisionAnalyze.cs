@@ -24,52 +24,38 @@ namespace VisionLibrary.VisionClass
         public string API { get => _api; set => _api = value; }
         public string Key { get; set; }
         public string SKey { get; set; }
+
+        public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] features)
+        {
+            //getBase64
+            byte[] imageBytes = VisCommonClass.GetImageAsByteArray(image);
+            return await UploadAndAnalyzeImage(imageBytes);
+        }
+
         public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] features)
         {
-            //byte[] imageBytes = VisCommonClass.GetImageAsByteArray(imageFilePath);
+            //getBase64
+            byte[] imageBytes = VisCommonClass.GetImageAsByteArray(imageFilePath);
+            return await UploadAndAnalyzeImage(imageBytes);
+        }
 
-            //// Convert byte[] to Base64 String
-            //string base64String = Convert.ToBase64String(imageBytes);
-
-
-            //string token = BaiduAccessToken.getAccessToken(Key, SKey);
-            //string host = $"{API}?access_token={token}";
-            //Encoding encoding = Encoding.Default;
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(host);
-            //request.Method = "post";
-            //request.KeepAlive = true;
-            //// 图片的base64编码                    
-            //String str = "image=" + HttpUtility.UrlEncode(base64String);
-            //byte[] buffer = encoding.GetBytes(str);
-            //request.ContentLength = buffer.Length;
-            //request.GetRequestStream().Write(buffer, 0, buffer.Length);
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            //StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-            //string result = reader.ReadToEnd();
-
-
-
-
-
+        public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(byte[] imageBytes, params System.Enum[] features)
+        {
             HttpClient client = new HttpClient();
-            
 
             //getToken
             string token = BaiduAccessToken.getAccessToken(Key, SKey);
-            string uri = API+"?" + $"access_token={token}" ;
+            string uri = API + "?" + $"access_token={token}";
 
-            //getBase64
-            byte[] imageBytes = VisCommonClass.GetImageAsByteArray(imageFilePath);
+            //getBase64            
             string base64String = Convert.ToBase64String(imageBytes);
 
             HttpResponseMessage response;
             using (HttpContent content = new StringContent($"image={HttpUtility.UrlEncode(base64String)}"))
-            {                
+            {
                 // Make the REST API call.
                 response = await client.PostAsync(uri, content);
             }
-
-
 
 
             string contentString = await response.Content.ReadAsStringAsync();
