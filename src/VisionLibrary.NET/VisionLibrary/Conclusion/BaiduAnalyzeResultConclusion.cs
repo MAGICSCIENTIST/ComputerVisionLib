@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.ProjectOxford.Vision.Contract;
 using VisionLibrary.Module;
@@ -9,14 +10,32 @@ using VisionLibrary.Module;
 namespace VisionLibrary.Conclusion
 {
     public static class BaiduAnalyzeResultConclusion
-    {        
-        public static bool IsAnimal(this BaiduAnalyzeResult data,double minConfidence=0.4)
+    {
+        public static bool IsAnimal(this BaiduAnalyzeResult data, double minConfidence = 0.4, string likePattern = "")
         {
-            var res=false;
-            if (data.result!=null)
+            var res = false;
+            if (data.result != null)
             {
-                res = data.result.Any(x => x.score >= minConfidence&&x.name!= "非动物");
-            }            
+                if (string.IsNullOrWhiteSpace(likePattern))
+                {
+                    res = data.result.Any(x => x.score >= minConfidence && x.name != "非动物");
+                }
+                else
+                {
+                    IEnumerable<Score> liked = data.result.Where(x => x.name != "非动物" && Regex.IsMatch(x.name, likePattern));
+                    res = liked.Sum(x => x.score) >= minConfidence;
+                }
+            }
+            return res;
+        }
+
+        public static Score GetTop(this BaiduAnalyzeResult data)
+        {
+            Score res = new Score();
+            if (data.result != null)
+            {
+                res = data.result.OrderByDescending(x => x.score).FirstOrDefault();                
+            }
             return res;
         }
 

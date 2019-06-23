@@ -17,6 +17,7 @@ namespace VisionLibrary.Common
             switch (type)
             {
                 case VisionAPIType.AzureVisionAnalyze: res = new AzureVisionAnalyze();break;
+                case VisionAPIType.BaiduAnimalAnalyze: res = new BaiduVisionAnalyze();break;
             }
 
             return res;

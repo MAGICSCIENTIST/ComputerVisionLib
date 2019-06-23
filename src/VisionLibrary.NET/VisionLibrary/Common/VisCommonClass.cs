@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AForge.Imaging.Filters;
-using Image = AForge.Imaging.Image;
 using AForge.Video.FFMPEG;
+using Image = AForge.Imaging.Image;
+//using AForge.Video.FFMPEG;
 
 namespace VisionLibrary.Common
 {
@@ -162,7 +163,14 @@ namespace VisionLibrary.Common
             };
             ResizeBicubic filter = new ResizeBicubic(_width, _height);
             // apply the filter
-            return filter.Apply(image as Bitmap);
+            try
+            {
+                return filter.Apply(image as Bitmap);
+            }
+            catch (Exception ex)
+            {
+                return image as Bitmap;
+            }
 
         }
 

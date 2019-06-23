@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using VisionLibrary.Module;
 
 namespace VisionLibrary.Common
 {
@@ -19,7 +21,7 @@ namespace VisionLibrary.Common
         /// <param name="ak">百度云中开通对应服务应用的 API Key 建议开通应用的时候多选服务</param>
         /// <param name="secretKey">百度云中开通对应服务应用的 Secret Key</param>
         /// <returns></returns>
-        public static String getAccessToken(string ak,string secretKey)
+        public static BaiduAccessTokenModel getAccessToken(string ak,string secretKey)
         {
             String authHost = url;
             HttpClient client = new HttpClient();
@@ -29,8 +31,10 @@ namespace VisionLibrary.Common
             paraList.Add(new KeyValuePair<string, string>("client_secret", secretKey));
 
             HttpResponseMessage response = client.PostAsync(authHost, new FormUrlEncodedContent(paraList)).Result;
-            String result = response.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(result);
+            String contentString = response.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(contentString);
+
+            BaiduAccessTokenModel result = JsonConvert.DeserializeObject<BaiduAccessTokenModel>(contentString);
             return result;
         }
     }

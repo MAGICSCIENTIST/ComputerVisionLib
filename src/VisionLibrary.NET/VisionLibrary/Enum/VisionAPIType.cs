@@ -4,8 +4,12 @@
     {
            
         AzureVisionAnalyze = 1,
-        AzureFaceAnalyze = 2,
-        AzureCustomVisionAnalyze = 3,
+        AzureFaceAnalyze,
+        AzureCustomVisionAnalyze,
+        BaiduAnimalAnalyze,
+        BaiduPlantAnalyze,
+        BaiduFaceAnalyze,
+        BaiduCustomVisionAnalyze,
 
     }
 }

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using VisionLibrary.Interface;
 using VisionLibrary.Common;
 using VisionLibrary.Enum;
+using VisionLibrary.Module;
 
 namespace VisionLibrary.VisionClass
 {
@@ -17,6 +18,12 @@ namespace VisionLibrary.VisionClass
     {
         public string API { get => uriBase; set => uriBase = value; }
         public string Key { get => SubscriptionKey; set => SubscriptionKey = value; }
+
+        /// <summary>
+        /// no use 
+        /// </summary>
+        public string SecretKey { get; set; }
+
         private string SubscriptionKey;
         //const string uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/analyze";
         //const string uriBase = "https://api.cognitive.azure.cn/vision/v1.0/analyze";//cn image analyze
@@ -32,7 +39,7 @@ namespace VisionLibrary.VisionClass
         /// <param name="image"></param>
         /// <param name="azureTagFeature"></param>
         /// <returns></returns>
-        public async Task<AnalysisResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] azureTagFeature)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] azureTagFeature)
         {
             byte[] byteData = VisCommonClass.GetImageAsByteArray(image);
 
@@ -47,7 +54,7 @@ namespace VisionLibrary.VisionClass
         /// </summary>
         /// <param name="imageFilePath">The image file to analyze.</param>
         /// <param name="azureTagFeature">type is a enum  'AzureTagFeature' .</param>
-        public async Task<AnalysisResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] azureTagFeature)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] azureTagFeature)
         {
 
 
@@ -64,7 +71,7 @@ namespace VisionLibrary.VisionClass
         /// <param name="byteData"></param>
         /// <param name="azureTagFeature"></param>
         /// <returns></returns>
-        public async Task<AnalysisResult> UploadAndAnalyzeImage(byte[] byteData, params System.Enum[] azureTagFeature)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(byte[] byteData, params System.Enum[] azureTagFeature)
         {
 
             HttpClient client = new HttpClient();
@@ -113,7 +120,8 @@ namespace VisionLibrary.VisionClass
             Console.WriteLine("\nResponse:\n");
             Console.WriteLine(VisCommonClass.JsonPrettyPrint(contentString));
 
-            return JsonConvert.DeserializeObject<AnalysisResult>(contentString);
+            //return JsonConvert.DeserializeObject<AnalysisResult>(contentString);
+            return JsonConvert.DeserializeObject<AzureAnalyzeResult>(contentString);
         }
 
 

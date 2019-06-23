@@ -17,34 +17,34 @@ using VisionLibrary.Module;
 
 namespace VisionLibrary.VisionClass
 {
-    public class BaiduVisionAnalyze
+    public class BaiduVisionAnalyze:IComputerVision
     {
         private string _api = "https://aip.baidubce.com/rest/2.0/image-classify/v1/animal";
 
         public string API { get => _api; set => _api = value; }
         public string Key { get; set; }
-        public string SKey { get; set; }
+        public string SecretKey { get; set; }
 
-        public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] features)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] features)
         {
             //getBase64
             byte[] imageBytes = VisCommonClass.GetImageAsByteArray(image);
             return await UploadAndAnalyzeImage(imageBytes);
         }
 
-        public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] features)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(string imageFilePath, params System.Enum[] features)
         {
             //getBase64
             byte[] imageBytes = VisCommonClass.GetImageAsByteArray(imageFilePath);
             return await UploadAndAnalyzeImage(imageBytes);
         }
 
-        public async Task<BaiduAnalyzeResult> UploadAndAnalyzeImage(byte[] imageBytes, params System.Enum[] features)
+        public async Task<IAnalyzeResult> UploadAndAnalyzeImage(byte[] imageBytes, params System.Enum[] features)
         {
             HttpClient client = new HttpClient();
 
             //getToken
-            string token = BaiduAccessToken.getAccessToken(Key, SKey);
+            string token = BaiduAccessToken.getAccessToken(Key, SecretKey).access_token;
             string uri = API + "?" + $"access_token={token}";
 
             //getBase64            

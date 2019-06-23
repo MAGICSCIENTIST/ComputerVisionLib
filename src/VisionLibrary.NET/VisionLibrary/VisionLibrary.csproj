@@ -48,7 +48,7 @@
       <HintPath>..\packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.FFMPEG">
-      <HintPath>..\..\..\..\engineDemo\dll\AForge.Video.FFMPEG.dll</HintPath>
+      <HintPath>..\..\..\..\RedCameraServer\src\dll\AForge.Video.FFMPEG.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ProjectOxford.Vision, Version=1.0.393.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ProjectOxford.Vision.1.0.393\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Microsoft.ProjectOxford.Vision.dll</HintPath>
@@ -82,6 +82,9 @@
     <Compile Include="Enum\FileType.cs" />
     <Compile Include="Interface\IComputerVision.cs" />
     <Compile Include="Enum\VisionAPIType.cs" />
+    <Compile Include="Interface\IAnalyzeResult.cs" />
+    <Compile Include="Module\AzureAnalyzeResult.cs" />
+    <Compile Include="Module\BaiduAccessTokenModel.cs" />
     <Compile Include="Module\Score.cs" />
     <Compile Include="Module\BaiduAnalyzeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,7 +93,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

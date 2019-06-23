@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ProjectOxford.Vision.Contract;
+using VisionLibrary.Module;
 
 namespace VisionLibrary.Conclusion
 {
     public static class AzureAnalyzeResultConclusion
-    {        
+    {
+      
+
         public static bool IsAnimal(this AnalysisResult data,List<string> tagIsAnimalList = null)
         {
             if (tagIsAnimalList == null)
