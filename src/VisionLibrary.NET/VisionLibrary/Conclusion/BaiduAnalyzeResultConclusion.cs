@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.ProjectOxford.Vision.Contract;
+using VisionLibrary.Interface;
 using VisionLibrary.Module;
 
 namespace VisionLibrary.Conclusion

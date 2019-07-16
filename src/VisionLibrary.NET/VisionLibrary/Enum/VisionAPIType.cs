@@ -7,6 +7,7 @@
         AzureFaceAnalyze,
         AzureCustomVisionAnalyze,
         BaiduAnimalAnalyze,
+        BaiduEasyDL,
         BaiduPlantAnalyze,
         BaiduFaceAnalyze,
         BaiduCustomVisionAnalyze,

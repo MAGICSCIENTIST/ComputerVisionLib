@@ -11,16 +11,33 @@ namespace VisionLibrary.Common
 {
     public class VisionClassFactory
     {
-        public static IComputerVision CreateVisionClass(VisionAPIType type)
+        public static IComputerVision CreateVisionClass(VisionAPIType type, AnalyzeOptions opt)
         {
             IComputerVision res = null;
             switch (type)
             {
-                case VisionAPIType.AzureVisionAnalyze: res = new AzureVisionAnalyze();break;
-                case VisionAPIType.BaiduAnimalAnalyze: res = new BaiduVisionAnalyze();break;
+                case VisionAPIType.AzureVisionAnalyze: res = new AzureVisionAnalyze(); break;
+                case VisionAPIType.BaiduAnimalAnalyze: res = new BaiduVisionAnalyze(); break;
+                case VisionAPIType.BaiduEasyDL:
+                    res = new BaiduEazyDL();
+                    res.API = opt.Url;
+                    break;
             }
 
             return res;
         }
+    }
+
+    public class AnalyzeOptions
+    {
+        private string key;
+        private string skey;
+        private string url;
+        //private double threshold;
+
+        public string Key { get => key; set => key = value; }
+        public string Skey { get => skey; set => skey = value; }
+        public string Url { get => url; set => url = value; }
+        //public double Threshold { get => threshold; set => threshold = value; }
     }
 }

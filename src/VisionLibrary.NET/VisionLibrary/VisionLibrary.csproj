@@ -80,6 +80,7 @@
     <Compile Include="Conclusion\AzureAnalyzeResultConclusion.cs" />
     <Compile Include="Enum\AzureTagFeature.cs" />
     <Compile Include="Enum\FileType.cs" />
+    <Compile Include="Interface\IAnalyzeResultConclusion.cs" />
     <Compile Include="Interface\IComputerVision.cs" />
     <Compile Include="Enum\VisionAPIType.cs" />
     <Compile Include="Interface\IAnalyzeResult.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Module\BaiduAnalyzeResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisionClass\AzureVisionAnalyze.cs" />
+    <Compile Include="VisionClass\BaiduEazyDL .cs" />
     <Compile Include="VisionClass\BaiduVisionAnalyze.cs" />
   </ItemGroup>
   <ItemGroup />
