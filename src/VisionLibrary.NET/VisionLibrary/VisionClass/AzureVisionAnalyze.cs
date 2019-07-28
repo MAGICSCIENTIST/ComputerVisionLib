@@ -30,6 +30,14 @@ namespace VisionLibrary.VisionClass
         //private const string uriBase = "https://api.cognitive.azure.cn/vision/v1.0/tag"; //cn
         private string uriBase = "https://southeastasia.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
+
+        public AzureVisionAnalyze(AnalyzeOptions options)
+        {
+            this.Key = options.Key;
+            this.SecretKey = options.Skey;
+            //this.API = options.Url;
+        }
+
         /// <summary>
         ///  Gets the analysis of the specified image file by usin
         /// the Computer Vision REST API.

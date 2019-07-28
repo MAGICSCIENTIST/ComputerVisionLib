@@ -4,13 +4,13 @@
     {
            
         AzureVisionAnalyze = 1,
-        AzureFaceAnalyze,
-        AzureCustomVisionAnalyze,
-        BaiduAnimalAnalyze,
-        BaiduEasyDL,
-        BaiduPlantAnalyze,
-        BaiduFaceAnalyze,
-        BaiduCustomVisionAnalyze,
+        AzureFaceAnalyze =2,
+        AzureCustomVisionAnalyze = 3,
+        BaiduAnimalAnalyze = 4,
+        BaiduEasyDL = 5,
+        BaiduPlantAnalyze = 6,
+        BaiduFaceAnalyze = 7,
+        BaiduCustomVisionAnalyze = 8,
 
     }
 }

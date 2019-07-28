@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.ProjectOxford.Vision.Contract;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VisionLibrary.Common;
 using VisionLibrary.Interface;
 using VisionLibrary.Module;
@@ -24,6 +25,13 @@ namespace VisionLibrary.VisionClass
         public string API { get => _api; set => _api = value; }
         public string Key { get; set; }
         public string SecretKey { get; set; }
+
+        public BaiduVisionAnalyze(AnalyzeOptions options)
+        {
+            this.Key = options.Key;
+            this.SecretKey = options.Skey;
+            //this.API = options.Url;
+        }
 
         public async Task<IAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] features)
         {
@@ -69,6 +77,8 @@ namespace VisionLibrary.VisionClass
             // Display the JSON response.
             Console.WriteLine("\nResponse:\n");
             Console.WriteLine(VisCommonClass.JsonPrettyPrint(contentString));
+
+            contentString = contentString.Replace("\"result", "\"results");
 
             return JsonConvert.DeserializeObject<BaiduAnalyzeResult>(contentString);
 

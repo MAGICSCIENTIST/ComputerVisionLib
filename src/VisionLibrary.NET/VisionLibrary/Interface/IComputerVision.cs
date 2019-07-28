@@ -7,6 +7,7 @@ namespace VisionLibrary.Interface
 {
     public interface IComputerVision
     {
+        
         /// <summary>
         /// API的网址
         /// </summary>

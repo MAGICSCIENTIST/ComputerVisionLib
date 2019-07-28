@@ -16,12 +16,9 @@ namespace VisionLibrary.Common
             IComputerVision res = null;
             switch (type)
             {
-                case VisionAPIType.AzureVisionAnalyze: res = new AzureVisionAnalyze(); break;
-                case VisionAPIType.BaiduAnimalAnalyze: res = new BaiduVisionAnalyze(); break;
-                case VisionAPIType.BaiduEasyDL:
-                    res = new BaiduEazyDL();
-                    res.API = opt.Url;
-                    break;
+                case VisionAPIType.AzureVisionAnalyze: res = new AzureVisionAnalyze(opt); break;
+                case VisionAPIType.BaiduAnimalAnalyze: res = new BaiduVisionAnalyze(opt); break;
+                case VisionAPIType.BaiduEasyDL: res = new BaiduEazyDL(opt); break;
             }
 
             return res;
