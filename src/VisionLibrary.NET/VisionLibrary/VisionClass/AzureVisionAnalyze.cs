@@ -35,7 +35,11 @@ namespace VisionLibrary.VisionClass
         {
             this.Key = options.Key;
             this.SecretKey = options.Skey;
-            //this.API = options.Url;
+            if (!string.IsNullOrWhiteSpace(options.Url))
+            {
+                this.API = options.Url;
+            }
+
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace VisionLibrary.VisionClass
         {
             byte[] byteData = VisCommonClass.GetImageAsByteArray(image);
 
-            return  UploadAndAnalyzeImage(byteData, azureTagFeature).GetAwaiter().GetResult();
+            return UploadAndAnalyzeImage(byteData, azureTagFeature).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -66,13 +70,13 @@ namespace VisionLibrary.VisionClass
         {
 
 
-            
+
             byte[] byteData = VisCommonClass.GetImageAsByteArray(imageFilePath);
 
             return await UploadAndAnalyzeImage(byteData, azureTagFeature);
 
-          
-        }        
+
+        }
         /// <summary>
         /// 识别
         /// </summary>

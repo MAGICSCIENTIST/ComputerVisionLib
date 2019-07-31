@@ -30,7 +30,10 @@ namespace VisionLibrary.VisionClass
         {
             this.Key = options.Key;
             this.SecretKey = options.Skey;
-            //this.API = options.Url;
+            if (!string.IsNullOrWhiteSpace(options.Url))
+            {
+                this.API = options.Url;
+            }
         }
 
         public async Task<IAnalyzeResult> UploadAndAnalyzeImage(Bitmap image, params System.Enum[] features)
