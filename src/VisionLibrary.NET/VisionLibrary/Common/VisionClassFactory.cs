@@ -30,11 +30,12 @@ namespace VisionLibrary.Common
         private string key;
         private string skey;
         private string url;
-        //private double threshold;
+        private double? threshold;
 
         public string Key { get => key; set => key = value; }
         public string Skey { get => skey; set => skey = value; }
         public string Url { get => url; set => url = value; }
-        //public double Threshold { get => threshold; set => threshold = value; }
+        public double? Threshold { get => threshold; set => threshold = value; }
     }
 }
+
