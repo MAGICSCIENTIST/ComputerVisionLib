@@ -77,16 +77,16 @@ namespace VisionLibrary.Common
             }
         }
 
-        internal static byte[] GetImageAsByteArray(Bitmap image, bool min = true, int minSizeWidth = 600, int minSizeHeight = 600, int maxSize = 2 * 1024 * 1024)
-        {
-
+        internal static byte[] GetImageAsByteArray(Bitmap image, bool min = true, int minSizeWidth = 600, int minSizeHeight = 600, int maxSize = 2 * 1024 )
+        {            
             if (min)
             {
                 using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    image.Save(memoryStream, ImageFormat.Bmp);
-
+                {                    
+                    image.Save(memoryStream, ImageFormat.Bmp);                  
+                    memoryStream.Position = 0;
                     MemoryStream res = CompressImage(memoryStream, size: maxSize) as MemoryStream;
+             
                     return res.ToArray();
                 }
             }
@@ -316,16 +316,34 @@ namespace VisionLibrary.Common
 
                 if (jpegICIinfo != null)
                 {
-
-                    //var fuckPath = Path.Combine(@"C:\Users\GUJIAMING\OneDrive\桌面\test\temp", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")+".jpg");
+                    
                     //ob.Save(fuckPath, jpegICIinfo, ep);//dFile是压缩后的                   
                     ob.Save(dFile, jpegICIinfo, ep);//dFile是压缩后的新路径                                            
                     //Console.WriteLine("dfile:" + dFile.Length);
                     //Console.WriteLine("dfile byte:"+ (dFile as MemoryStream).ToArray().LongLength);
                     if (dFile.Length > 1024 * size)
                     {
-                        flag = flag - 10;
-                        dFile = CompressImage(sFile, flag, size, false, dFile);//递归压缩直到可行
+                        flag -= 10;
+                        if (flag >= 0)
+                        {
+                            dFile = CompressImage(sFile, flag, size, false, dFile);//递归压缩直到可行
+
+                        }
+                        else if (flag >= -100)
+                        {
+                            do
+                            {
+                                dFile = new MemoryStream();
+                                var _radtio = (flag + 100) / 100.0;
+                                System.Drawing.Image image = System.Drawing.Image.FromStream(sFile);
+                                miniSizeImage(image, (int)(iSource.Width * _radtio), (int)(iSource.Height * _radtio)).Save(dFile, tFormat);
+                                flag -= 10;
+                            } while (dFile.Length > 1024 * size   &&  flag>=-100);
+                        }
+                        else
+                        {
+                            dFile = sFile;
+                        }
                     }
                 }
 

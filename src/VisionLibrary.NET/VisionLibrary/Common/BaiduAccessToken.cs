@@ -14,7 +14,7 @@ namespace VisionLibrary.Common
     {
         // 调用getAccessToken()获取的 access_token建议根据expires_in 时间 设置缓存        
        
-        private static string url = "https://aip.baidubce.com/oauth/2.0/token";
+        public static string url = "https://aip.baidubce.com/oauth/2.0/token";
         /// <summary>
         /// 
         /// </summary>
@@ -23,6 +23,7 @@ namespace VisionLibrary.Common
         /// <returns></returns>
         public static BaiduAccessTokenModel getAccessToken(string ak,string secretKey)
         {
+            
             String authHost = url;
             HttpClient client = new HttpClient();
             List<KeyValuePair<String, String>> paraList = new List<KeyValuePair<string, string>>();
