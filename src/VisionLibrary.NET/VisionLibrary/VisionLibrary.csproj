@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Common\BaiduAccessToken.cs" />
     <Compile Include="Attributes\ExNameAttribute.cs" />
-    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\Extensions\Extensions.cs" />
     <Compile Include="Common\LogWriter.cs" />
     <Compile Include="Common\Translator.cs" />
     <Compile Include="Common\VisCommonClass.cs" />

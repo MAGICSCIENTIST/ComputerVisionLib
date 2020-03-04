@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AForge.Imaging.Filters;
 using AForge.Video.FFMPEG;
+using VisionLibrary.Common.Extensions;
 using Image = AForge.Imaging.Image;
 //using AForge.Video.FFMPEG;
 

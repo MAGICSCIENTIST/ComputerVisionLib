@@ -9,6 +9,7 @@ using Microsoft.ProjectOxford.Vision.Contract;
 using Newtonsoft.Json;
 using VisionLibrary.Interface;
 using VisionLibrary.Common;
+using VisionLibrary.Common.Extensions;
 using VisionLibrary.Enum;
 using VisionLibrary.Module;
 
